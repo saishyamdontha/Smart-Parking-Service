@@ -1,7 +1,8 @@
 package com.example.parking.service;
 
+import com.example.parking.exception.ConflictException;
+import com.example.parking.exception.NotFoundException;
 import com.example.parking.model.ParkingSpace;
-import com.example.parking.model.ParkingSpaceStatus;
 import com.example.parking.repository.ParkingSpaceRepository;
 import org.springframework.stereotype.Service;
 
@@ -16,41 +17,34 @@ public class ParkingSpaceService {
         this.repository = repository;
     }
 
-    public List<ParkingSpace> getAvailableSpaces() {
-        return repository.findByStatus(ParkingSpaceStatus.AVAILABLE);
+    public List<ParkingSpace> findAll() {
+        return repository.findAll();
     }
 
-    public ParkingSpace getSpace(Long id) {
+    public ParkingSpace findById(Long id) {
         return repository.findById(id)
-                .orElseThrow(() ->
-                        new RuntimeException("Parking space not found"));
+                .orElseThrow(() -> new NotFoundException("Parking space " + id + " not found"));
     }
 
-    public ParkingSpace occupy(Long id) {
-
-        ParkingSpace space = getSpace(id);
-
-        if (space.getStatus() == ParkingSpaceStatus.OCCUPIED) {
-            throw new IllegalStateException(
-                    "Parking space is already occupied");
+    public void occupy(Long id) {
+        ensureExists(id);
+        int updated = repository.occupyIfAvailable(id);
+        if (updated == 0) {
+            throw new ConflictException("Parking space " + id + " is not AVAILABLE");
         }
-
-        space.setStatus(ParkingSpaceStatus.OCCUPIED);
-
-        return repository.save(space);
     }
 
-    public ParkingSpace release(Long id) {
-
-        ParkingSpace space = getSpace(id);
-
-        if (space.getStatus() == ParkingSpaceStatus.AVAILABLE) {
-            throw new IllegalStateException(
-                    "Parking space is already available");
+    public void release(Long id) {
+        ensureExists(id);
+        int updated = repository.releaseIfOccupied(id);
+        if (updated == 0) {
+            throw new ConflictException("Parking space " + id + " is not OCCUPIED");
         }
+    }
 
-        space.setStatus(ParkingSpaceStatus.AVAILABLE);
-
-        return repository.save(space);
+    private void ensureExists(Long id) {
+        if (!repository.existsById(id)) {
+            throw new NotFoundException("Parking space " + id + " not found");
+        }
     }
 }

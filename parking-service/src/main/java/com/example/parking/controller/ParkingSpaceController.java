@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/parking/spaces")
+@RequestMapping("/api/spaces")
 public class ParkingSpaceController {
 
     private final ParkingSpaceService service;
@@ -17,27 +17,25 @@ public class ParkingSpaceController {
         this.service = service;
     }
 
-    @GetMapping("/available")
-    public ResponseEntity<List<ParkingSpace>> getAvailableSpaces() {
-        return ResponseEntity.ok(service.getAvailableSpaces());
+    @GetMapping
+    public List<ParkingSpace> getAll() {
+        return service.findAll();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ParkingSpace> getSpace(@PathVariable Long id) {
-        return ResponseEntity.ok(service.getSpace(id));
+    public ParkingSpace getOne(@PathVariable Long id) {
+        return service.findById(id);
     }
 
-    @PostMapping("/internal/{id}/occupy")
-    public ResponseEntity<ParkingSpace> occupy(
-            @PathVariable Long id) {
-
-        return ResponseEntity.ok(service.occupy(id));
+    @PostMapping("/{id}/occupy")
+    public ResponseEntity<Void> occupy(@PathVariable Long id) {
+        service.occupy(id);
+        return ResponseEntity.noContent().build();
     }
 
-    @PostMapping("/internal/{id}/release")
-    public ResponseEntity<ParkingSpace> release(
-            @PathVariable Long id) {
-
-        return ResponseEntity.ok(service.release(id));
+    @PostMapping("/{id}/release")
+    public ResponseEntity<Void> release(@PathVariable Long id) {
+        service.release(id);
+        return ResponseEntity.noContent().build();
     }
 }
