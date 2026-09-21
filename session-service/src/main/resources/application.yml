@@ -1,0 +1,28 @@
+server:
+  port: 8082
+
+spring:
+  datasource:
+    url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5435}/sessiondb
+    username: ${DB_USER:session}
+    password: ${DB_PASSWORD:session}
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    open-in-view: false
+  flyway:
+    enabled: true
+
+parking:
+  service:
+    base-url: ${PARKING_SERVICE_URL:http://localhost:8081}
+
+activity:
+  service:
+    base-url: ${ACTIVITY_SERVICE_URL:http://localhost:8083}
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info

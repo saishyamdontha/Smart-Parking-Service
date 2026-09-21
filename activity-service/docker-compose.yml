@@ -1,0 +1,15 @@
+services:
+  postgres:
+    image: postgres:17
+    container_name: activity-postgres
+    environment:
+      POSTGRES_DB: activitydb
+      POSTGRES_USER: activity
+      POSTGRES_PASSWORD: activity
+    ports:
+      - "5436:5432"
+    volumes:
+      - activity_postgres_data:/var/lib/postgresql/data
+
+volumes:
+  activity_postgres_data:

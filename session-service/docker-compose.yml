@@ -1,0 +1,15 @@
+services:
+  postgres:
+    image: postgres:17
+    container_name: session-postgres
+    environment:
+      POSTGRES_DB: sessiondb
+      POSTGRES_USER: session
+      POSTGRES_PASSWORD: session
+    ports:
+      - "5435:5432"
+    volumes:
+      - session_postgres_data:/var/lib/postgresql/data
+
+volumes:
+  session_postgres_data:
