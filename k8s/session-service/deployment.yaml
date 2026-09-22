@@ -14,8 +14,8 @@ spec:
     spec:
       containers:
         - name: session-service
-          image: session-service:latest
-          imagePullPolicy: Never
+          image: saishyamdontha/session-service:latest
+          imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 8082
           env:

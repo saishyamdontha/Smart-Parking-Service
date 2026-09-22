@@ -14,8 +14,8 @@ spec:
     spec:
       containers:
         - name: parking-service
-          image: parking-service:latest
-          imagePullPolicy: Never
+          image: saishyamdontha/parking-service:latest
+          imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 8081
           env:

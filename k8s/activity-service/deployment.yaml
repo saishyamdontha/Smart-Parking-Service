@@ -14,8 +14,8 @@ spec:
     spec:
       containers:
         - name: activity-service
-          image: activity-service:latest
-          imagePullPolicy: Never
+          image: saishyamdontha/activity-service:latest
+          imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 8083
           env:
