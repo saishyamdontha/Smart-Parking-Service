@@ -1,0 +1,5 @@
+# Scenario S8: session-service is configured with a wrong address for parking-service.
+services:
+  session-service:
+    environment:
+      PARKING_SERVICE_URL: http://parking-svc:8081
