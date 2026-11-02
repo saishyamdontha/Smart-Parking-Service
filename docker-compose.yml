@@ -1,0 +1,41 @@
+# Whole system for local runs and fault-injection experiments.
+services:
+  parking-db:
+    image: postgres:16
+    environment: { POSTGRES_DB: parkingdb, POSTGRES_USER: parking, POSTGRES_PASSWORD: parking }
+    healthcheck: { test: ["CMD-SHELL", "pg_isready -U parking -d parkingdb"], interval: 3s, retries: 20 }
+  session-db:
+    image: postgres:16
+    environment: { POSTGRES_DB: sessiondb, POSTGRES_USER: session, POSTGRES_PASSWORD: session }
+    healthcheck: { test: ["CMD-SHELL", "pg_isready -U session -d sessiondb"], interval: 3s, retries: 20 }
+  activity-db:
+    image: postgres:16
+    environment: { POSTGRES_DB: activitydb, POSTGRES_USER: activity, POSTGRES_PASSWORD: activity }
+    healthcheck: { test: ["CMD-SHELL", "pg_isready -U activity -d activitydb"], interval: 3s, retries: 20 }
+
+  parking-service:
+    build: ./parking-service
+    environment: { DB_HOST: parking-db, DB_PORT: "5432", DB_USER: parking, DB_PASSWORD: parking }
+    ports: ["8081:8081"]
+    depends_on: { parking-db: { condition: service_healthy } }
+
+  activity-service:
+    build: ./activity-service
+    environment: { DB_HOST: activity-db, DB_PORT: "5432", DB_USER: activity, DB_PASSWORD: activity }
+    ports: ["8083:8083"]
+    depends_on: { activity-db: { condition: service_healthy } }
+
+  session-service:
+    build: ./session-service
+    environment:
+      DB_HOST: session-db
+      DB_PORT: "5432"
+      DB_USER: session
+      DB_PASSWORD: session
+      PARKING_SERVICE_URL: http://parking-service:8081
+      ACTIVITY_SERVICE_URL: http://activity-service:8083
+    ports: ["8082:8082"]
+    depends_on:
+      session-db: { condition: service_healthy }
+      parking-service: { condition: service_started }
+      activity-service: { condition: service_started }
