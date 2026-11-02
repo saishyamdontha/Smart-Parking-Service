@@ -1,0 +1,1710 @@
+[
+  {
+    "rep": 1,
+    "scenario": "S1",
+    "description": "parking-service down",
+    "truth": "parking-service",
+    "held_out": false,
+    "statuses": [
+      504,
+      504,
+      504,
+      504,
+      504,
+      504
+    ],
+    "health": {
+      "parking-service": {
+        "status": "UNREACHABLE",
+        "db": null
+      },
+      "session-service": {
+        "status": "UP",
+        "db": "UP"
+      },
+      "activity-service": {
+        "status": "UP",
+        "db": "UP"
+      }
+    },
+    "session_codes": {
+      "SES-PARKING-TIMEOUT": 6
+    },
+    "L0": {
+      "detected": true,
+      "localised": false,
+      "candidates": [
+        "session-service",
+        "session-db",
+        "parking-service",
+        "parking-db"
+      ]
+    },
+    "L1": {
+      "detected": true,
+      "localised": true,
+      "candidates": [
+        "parking-service"
+      ]
+    },
+    "L2": {
+      "detected": true,
+      "localised": true,
+      "candidates": [
+        "parking-service"
+      ]
+    }
+  },
+  {
+    "rep": 1,
+    "scenario": "S2",
+    "description": "activity-service down (silent)",
+    "truth": "activity-service",
+    "held_out": false,
+    "statuses": [
+      201,
+      200,
+      201,
+      200,
+      201,
+      200,
+      201,
+      200,
+      201,
+      200,
+      201,
+      200
+    ],
+    "health": {
+      "parking-service": {
+        "status": "UP",
+        "db": "UP"
+      },
+      "session-service": {
+        "status": "UP",
+        "db": "UP"
+      },
+      "activity-service": {
+        "status": "UNREACHABLE",
+        "db": null
+      }
+    },
+    "session_codes": {
+      "SES-ACTIVITY-UNREACHABLE": 12
+    },
+    "L0": {
+      "detected": false,
+      "localised": false,
+      "candidates": []
+    },
+    "L1": {
+      "detected": true,
+      "localised": true,
+      "candidates": [
+        "activity-service"
+      ]
+    },
+    "L2": {
+      "detected": true,
+      "localised": true,
+      "candidates": [
+        "activity-service"
+      ]
+    }
+  },
+  {
+    "rep": 1,
+    "scenario": "S3",
+    "description": "parking database down",
+    "truth": "parking-db",
+    "held_out": false,
+    "statuses": [
+      502,
+      502,
+      502,
+      502,
+      502,
+      502
+    ],
+    "health": {
+      "parking-service": {
+        "status": "DOWN",
+        "db": "DOWN"
+      },
+      "session-service": {
+        "status": "UP",
+        "db": "UP"
+      },
+      "activity-service": {
+        "status": "UP",
+        "db": "UP"
+      }
+    },
+    "session_codes": {
+      "SES-PARKING-HTTP_5XX": 6
+    },
+    "L0": {
+      "detected": true,
+      "localised": false,
+      "candidates": [
+        "session-service",
+        "session-db",
+        "parking-service",
+        "parking-db"
+      ]
+    },
+    "L1": {
+      "detected": true,
+      "localised": true,
+      "candidates": [
+        "parking-db"
+      ]
+    },
+    "L2": {
+      "detected": true,
+      "localised": true,
+      "candidates": [
+        "parking-db"
+      ]
+    }
+  },
+  {
+    "rep": 1,
+    "scenario": "S4",
+    "description": "session database down",
+    "truth": "session-db",
+    "held_out": false,
+    "statuses": [
+      500,
+      500,
+      500,
+      500,
+      500,
+      500
+    ],
+    "health": {
+      "parking-service": {
+        "status": "UP",
+        "db": "UP"
+      },
+      "session-service": {
+        "status": "DOWN",
+        "db": "DOWN"
+      },
+      "activity-service": {
+        "status": "UP",
+        "db": "UP"
+      }
+    },
+    "session_codes": {
+      "SES-INTERNAL": 6
+    },
+    "L0": {
+      "detected": true,
+      "localised": false,
+      "candidates": [
+        "session-service",
+        "session-db",
+        "parking-service",
+        "parking-db"
+      ]
+    },
+    "L1": {
+      "detected": true,
+      "localised": true,
+      "candidates": [
+        "session-db"
+      ]
+    },
+    "L2": {
+      "detected": true,
+      "localised": true,
+      "candidates": [
+        "session-db"
+      ]
+    }
+  },
+  {
+    "rep": 1,
+    "scenario": "S5",
+    "description": "parking-service slow, above timeout (3 s)",
+    "truth": "parking-service",
+    "held_out": false,
+    "statuses": [
+      504,
+      504,
+      504,
+      504,
+      504,
+      504
+    ],
+    "health": {
+      "parking-service": {
+        "status": "UP",
+        "db": "UP"
+      },
+      "session-service": {
+        "status": "UP",
+        "db": "UP"
+      },
+      "activity-service": {
+        "status": "UP",
+        "db": "UP"
+      }
+    },
+    "session_codes": {
+      "SES-PARKING-TIMEOUT": 6
+    },
+    "L0": {
+      "detected": true,
+      "localised": false,
+      "candidates": [
+        "session-service",
+        "session-db",
+        "parking-service",
+        "parking-db"
+      ]
+    },
+    "L1": {
+      "detected": true,
+      "localised": false,
+      "candidates": [
+        "session-service",
+        "session-db",
+        "parking-service",
+        "parking-db"
+      ]
+    },
+    "L2": {
+      "detected": true,
+      "localised": true,
+      "candidates": [
+        "parking-service"
+      ]
+    }
+  },
+  {
+    "rep": 1,
+    "scenario": "S6",
+    "description": "parking-service intermittent errors (50%)",
+    "truth": "parking-service",
+    "held_out": false,
+    "statuses": [
+      201,
+      502,
+      201,
+      502,
+      201,
+      502,
+      502,
+      201,
+      200,
+      201,
+      200
+    ],
+    "health": {
+      "parking-service": {
+        "status": "UP",
+        "db": "UP"
+      },
+      "session-service": {
+        "status": "UP",
+        "db": "UP"
+      },
+      "activity-service": {
+        "status": "UP",
+        "db": "UP"
+      }
+    },
+    "session_codes": {
+      "SES-PARKING-HTTP_5XX": 4
+    },
+    "L0": {
+      "detected": true,
+      "localised": false,
+      "candidates": [
+        "session-service",
+        "session-db",
+        "parking-service",
+        "parking-db"
+      ]
+    },
+    "L1": {
+      "detected": true,
+      "localised": false,
+      "candidates": [
+        "session-service",
+        "session-db",
+        "parking-service",
+        "parking-db"
+      ]
+    },
+    "L2": {
+      "detected": true,
+      "localised": true,
+      "candidates": [
+        "parking-service"
+      ]
+    }
+  },
+  {
+    "rep": 1,
+    "scenario": "S7",
+    "description": "activity-service rejects events (silent)",
+    "truth": "activity-service",
+    "held_out": false,
+    "statuses": [
+      201,
+      200,
+      201,
+      200,
+      201,
+      200,
+      201,
+      200,
+      201,
+      200,
+      201,
+      200
+    ],
+    "health": {
+      "parking-service": {
+        "status": "UP",
+        "db": "UP"
+      },
+      "session-service": {
+        "status": "UP",
+        "db": "UP"
+      },
+      "activity-service": {
+        "status": "UP",
+        "db": "UP"
+      }
+    },
+    "session_codes": {
+      "SES-ACTIVITY-HTTP_5XX": 12
+    },
+    "L0": {
+      "detected": false,
+      "localised": false,
+      "candidates": []
+    },
+    "L1": {
+      "detected": false,
+      "localised": false,
+      "candidates": []
+    },
+    "L2": {
+      "detected": true,
+      "localised": true,
+      "candidates": [
+        "activity-service"
+      ]
+    }
+  },
+  {
+    "rep": 1,
+    "scenario": "S8",
+    "description": "session-service misconfigured (wrong parking URL)",
+    "truth": "session-service",
+    "held_out": false,
+    "statuses": [
+      502,
+      502,
+      502,
+      502,
+      502,
+      502
+    ],
+    "health": {
+      "parking-service": {
+        "status": "UP",
+        "db": "UP"
+      },
+      "session-service": {
+        "status": "UP",
+        "db": "UP"
+      },
+      "activity-service": {
+        "status": "UP",
+        "db": "UP"
+      }
+    },
+    "session_codes": {
+      "SES-PARKING-UNREACHABLE": 6
+    },
+    "L0": {
+      "detected": true,
+      "localised": false,
+      "candidates": [
+        "session-service",
+        "session-db",
+        "parking-service",
+        "parking-db"
+      ]
+    },
+    "L1": {
+      "detected": true,
+      "localised": false,
+      "candidates": [
+        "session-service",
+        "session-db",
+        "parking-service",
+        "parking-db"
+      ]
+    },
+    "L2": {
+      "detected": true,
+      "localised": true,
+      "candidates": [
+        "session-service"
+      ]
+    }
+  },
+  {
+    "rep": 1,
+    "scenario": "H1",
+    "description": "activity database down (held out)",
+    "truth": "activity-db",
+    "held_out": true,
+    "statuses": [
+      201,
+      200,
+      201,
+      200,
+      201,
+      200,
+      201,
+      200,
+      201,
+      200,
+      201,
+      200
+    ],
+    "health": {
+      "parking-service": {
+        "status": "UP",
+        "db": "UP"
+      },
+      "session-service": {
+        "status": "UP",
+        "db": "UP"
+      },
+      "activity-service": {
+        "status": "DOWN",
+        "db": "DOWN"
+      }
+    },
+    "session_codes": {
+      "SES-ACTIVITY-HTTP_5XX": 12
+    },
+    "L0": {
+      "detected": false,
+      "localised": false,
+      "candidates": []
+    },
+    "L1": {
+      "detected": true,
+      "localised": true,
+      "candidates": [
+        "activity-db"
+      ]
+    },
+    "L2": {
+      "detected": true,
+      "localised": true,
+      "candidates": [
+        "activity-db"
+      ]
+    }
+  },
+  {
+    "rep": 1,
+    "scenario": "H2",
+    "description": "parking-service slow, below timeout (1.5 s) (held out)",
+    "truth": "parking-service",
+    "held_out": true,
+    "statuses": [
+      201,
+      200,
+      201,
+      200,
+      201,
+      200,
+      201,
+      200,
+      201,
+      200,
+      201,
+      200
+    ],
+    "health": {
+      "parking-service": {
+        "status": "UP",
+        "db": "UP"
+      },
+      "session-service": {
+        "status": "UP",
+        "db": "UP"
+      },
+      "activity-service": {
+        "status": "UP",
+        "db": "UP"
+      }
+    },
+    "session_codes": {},
+    "L0": {
+      "detected": false,
+      "localised": false,
+      "candidates": []
+    },
+    "L1": {
+      "detected": false,
+      "localised": false,
+      "candidates": []
+    },
+    "L2": {
+      "detected": false,
+      "localised": false,
+      "candidates": []
+    }
+  },
+  {
+    "rep": 2,
+    "scenario": "S1",
+    "description": "parking-service down",
+    "truth": "parking-service",
+    "held_out": false,
+    "statuses": [
+      502,
+      502,
+      502,
+      502,
+      502,
+      502
+    ],
+    "health": {
+      "parking-service": {
+        "status": "UNREACHABLE",
+        "db": null
+      },
+      "session-service": {
+        "status": "UP",
+        "db": "UP"
+      },
+      "activity-service": {
+        "status": "UP",
+        "db": "UP"
+      }
+    },
+    "session_codes": {
+      "SES-PARKING-UNREACHABLE": 6
+    },
+    "L0": {
+      "detected": true,
+      "localised": false,
+      "candidates": [
+        "session-service",
+        "session-db",
+        "parking-service",
+        "parking-db"
+      ]
+    },
+    "L1": {
+      "detected": true,
+      "localised": true,
+      "candidates": [
+        "parking-service"
+      ]
+    },
+    "L2": {
+      "detected": true,
+      "localised": true,
+      "candidates": [
+        "parking-service"
+      ]
+    }
+  },
+  {
+    "rep": 2,
+    "scenario": "S2",
+    "description": "activity-service down (silent)",
+    "truth": "activity-service",
+    "held_out": false,
+    "statuses": [
+      201,
+      200,
+      201,
+      200,
+      201,
+      200,
+      201,
+      200,
+      201,
+      200,
+      201,
+      200
+    ],
+    "health": {
+      "parking-service": {
+        "status": "UP",
+        "db": "UP"
+      },
+      "session-service": {
+        "status": "UP",
+        "db": "UP"
+      },
+      "activity-service": {
+        "status": "UNREACHABLE",
+        "db": null
+      }
+    },
+    "session_codes": {
+      "SES-ACTIVITY-UNREACHABLE": 12
+    },
+    "L0": {
+      "detected": false,
+      "localised": false,
+      "candidates": []
+    },
+    "L1": {
+      "detected": true,
+      "localised": true,
+      "candidates": [
+        "activity-service"
+      ]
+    },
+    "L2": {
+      "detected": true,
+      "localised": true,
+      "candidates": [
+        "activity-service"
+      ]
+    }
+  },
+  {
+    "rep": 2,
+    "scenario": "S3",
+    "description": "parking database down",
+    "truth": "parking-db",
+    "held_out": false,
+    "statuses": [
+      502,
+      502,
+      502,
+      502,
+      502,
+      502
+    ],
+    "health": {
+      "parking-service": {
+        "status": "DOWN",
+        "db": "DOWN"
+      },
+      "session-service": {
+        "status": "UP",
+        "db": "UP"
+      },
+      "activity-service": {
+        "status": "UP",
+        "db": "UP"
+      }
+    },
+    "session_codes": {
+      "SES-PARKING-HTTP_5XX": 6
+    },
+    "L0": {
+      "detected": true,
+      "localised": false,
+      "candidates": [
+        "session-service",
+        "session-db",
+        "parking-service",
+        "parking-db"
+      ]
+    },
+    "L1": {
+      "detected": true,
+      "localised": true,
+      "candidates": [
+        "parking-db"
+      ]
+    },
+    "L2": {
+      "detected": true,
+      "localised": true,
+      "candidates": [
+        "parking-db"
+      ]
+    }
+  },
+  {
+    "rep": 2,
+    "scenario": "S4",
+    "description": "session database down",
+    "truth": "session-db",
+    "held_out": false,
+    "statuses": [
+      500,
+      500,
+      500,
+      500,
+      500,
+      500
+    ],
+    "health": {
+      "parking-service": {
+        "status": "UP",
+        "db": "UP"
+      },
+      "session-service": {
+        "status": "DOWN",
+        "db": "DOWN"
+      },
+      "activity-service": {
+        "status": "UP",
+        "db": "UP"
+      }
+    },
+    "session_codes": {
+      "SES-INTERNAL": 6
+    },
+    "L0": {
+      "detected": true,
+      "localised": false,
+      "candidates": [
+        "session-service",
+        "session-db",
+        "parking-service",
+        "parking-db"
+      ]
+    },
+    "L1": {
+      "detected": true,
+      "localised": true,
+      "candidates": [
+        "session-db"
+      ]
+    },
+    "L2": {
+      "detected": true,
+      "localised": true,
+      "candidates": [
+        "session-db"
+      ]
+    }
+  },
+  {
+    "rep": 2,
+    "scenario": "S5",
+    "description": "parking-service slow, above timeout (3 s)",
+    "truth": "parking-service",
+    "held_out": false,
+    "statuses": [
+      504,
+      504,
+      504,
+      504,
+      504,
+      504
+    ],
+    "health": {
+      "parking-service": {
+        "status": "UP",
+        "db": "UP"
+      },
+      "session-service": {
+        "status": "UP",
+        "db": "UP"
+      },
+      "activity-service": {
+        "status": "UP",
+        "db": "UP"
+      }
+    },
+    "session_codes": {
+      "SES-PARKING-TIMEOUT": 6
+    },
+    "L0": {
+      "detected": true,
+      "localised": false,
+      "candidates": [
+        "session-service",
+        "session-db",
+        "parking-service",
+        "parking-db"
+      ]
+    },
+    "L1": {
+      "detected": true,
+      "localised": false,
+      "candidates": [
+        "session-service",
+        "session-db",
+        "parking-service",
+        "parking-db"
+      ]
+    },
+    "L2": {
+      "detected": true,
+      "localised": true,
+      "candidates": [
+        "parking-service"
+      ]
+    }
+  },
+  {
+    "rep": 2,
+    "scenario": "S6",
+    "description": "parking-service intermittent errors (50%)",
+    "truth": "parking-service",
+    "held_out": false,
+    "statuses": [
+      201,
+      200,
+      201,
+      502,
+      201,
+      200,
+      201,
+      502,
+      502,
+      502
+    ],
+    "health": {
+      "parking-service": {
+        "status": "UP",
+        "db": "UP"
+      },
+      "session-service": {
+        "status": "UP",
+        "db": "UP"
+      },
+      "activity-service": {
+        "status": "UP",
+        "db": "UP"
+      }
+    },
+    "session_codes": {
+      "SES-PARKING-HTTP_5XX": 4
+    },
+    "L0": {
+      "detected": true,
+      "localised": false,
+      "candidates": [
+        "session-service",
+        "session-db",
+        "parking-service",
+        "parking-db"
+      ]
+    },
+    "L1": {
+      "detected": true,
+      "localised": false,
+      "candidates": [
+        "session-service",
+        "session-db",
+        "parking-service",
+        "parking-db"
+      ]
+    },
+    "L2": {
+      "detected": true,
+      "localised": true,
+      "candidates": [
+        "parking-service"
+      ]
+    }
+  },
+  {
+    "rep": 2,
+    "scenario": "S7",
+    "description": "activity-service rejects events (silent)",
+    "truth": "activity-service",
+    "held_out": false,
+    "statuses": [
+      201,
+      200,
+      201,
+      200,
+      201,
+      200,
+      201,
+      200,
+      201,
+      200,
+      201,
+      200
+    ],
+    "health": {
+      "parking-service": {
+        "status": "UP",
+        "db": "UP"
+      },
+      "session-service": {
+        "status": "UP",
+        "db": "UP"
+      },
+      "activity-service": {
+        "status": "UP",
+        "db": "UP"
+      }
+    },
+    "session_codes": {
+      "SES-ACTIVITY-HTTP_5XX": 12
+    },
+    "L0": {
+      "detected": false,
+      "localised": false,
+      "candidates": []
+    },
+    "L1": {
+      "detected": false,
+      "localised": false,
+      "candidates": []
+    },
+    "L2": {
+      "detected": true,
+      "localised": true,
+      "candidates": [
+        "activity-service"
+      ]
+    }
+  },
+  {
+    "rep": 2,
+    "scenario": "S8",
+    "description": "session-service misconfigured (wrong parking URL)",
+    "truth": "session-service",
+    "held_out": false,
+    "statuses": [
+      502,
+      502,
+      502,
+      502,
+      502,
+      502
+    ],
+    "health": {
+      "parking-service": {
+        "status": "UP",
+        "db": "UP"
+      },
+      "session-service": {
+        "status": "UP",
+        "db": "UP"
+      },
+      "activity-service": {
+        "status": "UP",
+        "db": "UP"
+      }
+    },
+    "session_codes": {
+      "SES-PARKING-UNREACHABLE": 6
+    },
+    "L0": {
+      "detected": true,
+      "localised": false,
+      "candidates": [
+        "session-service",
+        "session-db",
+        "parking-service",
+        "parking-db"
+      ]
+    },
+    "L1": {
+      "detected": true,
+      "localised": false,
+      "candidates": [
+        "session-service",
+        "session-db",
+        "parking-service",
+        "parking-db"
+      ]
+    },
+    "L2": {
+      "detected": true,
+      "localised": true,
+      "candidates": [
+        "session-service"
+      ]
+    }
+  },
+  {
+    "rep": 2,
+    "scenario": "H1",
+    "description": "activity database down (held out)",
+    "truth": "activity-db",
+    "held_out": true,
+    "statuses": [
+      201,
+      200,
+      201,
+      200,
+      201,
+      200,
+      201,
+      200,
+      201,
+      200,
+      201,
+      200
+    ],
+    "health": {
+      "parking-service": {
+        "status": "UP",
+        "db": "UP"
+      },
+      "session-service": {
+        "status": "UP",
+        "db": "UP"
+      },
+      "activity-service": {
+        "status": "DOWN",
+        "db": "DOWN"
+      }
+    },
+    "session_codes": {
+      "SES-ACTIVITY-HTTP_5XX": 12
+    },
+    "L0": {
+      "detected": false,
+      "localised": false,
+      "candidates": []
+    },
+    "L1": {
+      "detected": true,
+      "localised": true,
+      "candidates": [
+        "activity-db"
+      ]
+    },
+    "L2": {
+      "detected": true,
+      "localised": true,
+      "candidates": [
+        "activity-db"
+      ]
+    }
+  },
+  {
+    "rep": 2,
+    "scenario": "H2",
+    "description": "parking-service slow, below timeout (1.5 s) (held out)",
+    "truth": "parking-service",
+    "held_out": true,
+    "statuses": [
+      201,
+      200,
+      201,
+      200,
+      201,
+      200,
+      201,
+      200,
+      201,
+      200,
+      201,
+      200
+    ],
+    "health": {
+      "parking-service": {
+        "status": "UP",
+        "db": "UP"
+      },
+      "session-service": {
+        "status": "UP",
+        "db": "UP"
+      },
+      "activity-service": {
+        "status": "UP",
+        "db": "UP"
+      }
+    },
+    "session_codes": {},
+    "L0": {
+      "detected": false,
+      "localised": false,
+      "candidates": []
+    },
+    "L1": {
+      "detected": false,
+      "localised": false,
+      "candidates": []
+    },
+    "L2": {
+      "detected": false,
+      "localised": false,
+      "candidates": []
+    }
+  },
+  {
+    "rep": 3,
+    "scenario": "S1",
+    "description": "parking-service down",
+    "truth": "parking-service",
+    "held_out": false,
+    "statuses": [
+      502,
+      502,
+      502,
+      502,
+      502,
+      502
+    ],
+    "health": {
+      "parking-service": {
+        "status": "UNREACHABLE",
+        "db": null
+      },
+      "session-service": {
+        "status": "UP",
+        "db": "UP"
+      },
+      "activity-service": {
+        "status": "UP",
+        "db": "UP"
+      }
+    },
+    "session_codes": {
+      "SES-PARKING-UNREACHABLE": 6
+    },
+    "L0": {
+      "detected": true,
+      "localised": false,
+      "candidates": [
+        "session-service",
+        "session-db",
+        "parking-service",
+        "parking-db"
+      ]
+    },
+    "L1": {
+      "detected": true,
+      "localised": true,
+      "candidates": [
+        "parking-service"
+      ]
+    },
+    "L2": {
+      "detected": true,
+      "localised": true,
+      "candidates": [
+        "parking-service"
+      ]
+    }
+  },
+  {
+    "rep": 3,
+    "scenario": "S2",
+    "description": "activity-service down (silent)",
+    "truth": "activity-service",
+    "held_out": false,
+    "statuses": [
+      201,
+      200,
+      201,
+      200,
+      201,
+      200,
+      201,
+      200,
+      201,
+      200,
+      201,
+      200
+    ],
+    "health": {
+      "parking-service": {
+        "status": "UP",
+        "db": "UP"
+      },
+      "session-service": {
+        "status": "UP",
+        "db": "UP"
+      },
+      "activity-service": {
+        "status": "UNREACHABLE",
+        "db": null
+      }
+    },
+    "session_codes": {
+      "SES-ACTIVITY-UNREACHABLE": 12
+    },
+    "L0": {
+      "detected": false,
+      "localised": false,
+      "candidates": []
+    },
+    "L1": {
+      "detected": true,
+      "localised": true,
+      "candidates": [
+        "activity-service"
+      ]
+    },
+    "L2": {
+      "detected": true,
+      "localised": true,
+      "candidates": [
+        "activity-service"
+      ]
+    }
+  },
+  {
+    "rep": 3,
+    "scenario": "S3",
+    "description": "parking database down",
+    "truth": "parking-db",
+    "held_out": false,
+    "statuses": [
+      502,
+      502,
+      502,
+      502,
+      502,
+      502
+    ],
+    "health": {
+      "parking-service": {
+        "status": "DOWN",
+        "db": "DOWN"
+      },
+      "session-service": {
+        "status": "UP",
+        "db": "UP"
+      },
+      "activity-service": {
+        "status": "UP",
+        "db": "UP"
+      }
+    },
+    "session_codes": {
+      "SES-PARKING-HTTP_5XX": 6
+    },
+    "L0": {
+      "detected": true,
+      "localised": false,
+      "candidates": [
+        "session-service",
+        "session-db",
+        "parking-service",
+        "parking-db"
+      ]
+    },
+    "L1": {
+      "detected": true,
+      "localised": true,
+      "candidates": [
+        "parking-db"
+      ]
+    },
+    "L2": {
+      "detected": true,
+      "localised": true,
+      "candidates": [
+        "parking-db"
+      ]
+    }
+  },
+  {
+    "rep": 3,
+    "scenario": "S4",
+    "description": "session database down",
+    "truth": "session-db",
+    "held_out": false,
+    "statuses": [
+      500,
+      500,
+      500,
+      500,
+      500,
+      500
+    ],
+    "health": {
+      "parking-service": {
+        "status": "UP",
+        "db": "UP"
+      },
+      "session-service": {
+        "status": "DOWN",
+        "db": "DOWN"
+      },
+      "activity-service": {
+        "status": "UP",
+        "db": "UP"
+      }
+    },
+    "session_codes": {
+      "SES-INTERNAL": 6
+    },
+    "L0": {
+      "detected": true,
+      "localised": false,
+      "candidates": [
+        "session-service",
+        "session-db",
+        "parking-service",
+        "parking-db"
+      ]
+    },
+    "L1": {
+      "detected": true,
+      "localised": true,
+      "candidates": [
+        "session-db"
+      ]
+    },
+    "L2": {
+      "detected": true,
+      "localised": true,
+      "candidates": [
+        "session-db"
+      ]
+    }
+  },
+  {
+    "rep": 3,
+    "scenario": "S5",
+    "description": "parking-service slow, above timeout (3 s)",
+    "truth": "parking-service",
+    "held_out": false,
+    "statuses": [
+      504,
+      504,
+      504,
+      504,
+      504,
+      504
+    ],
+    "health": {
+      "parking-service": {
+        "status": "UP",
+        "db": "UP"
+      },
+      "session-service": {
+        "status": "UP",
+        "db": "UP"
+      },
+      "activity-service": {
+        "status": "UP",
+        "db": "UP"
+      }
+    },
+    "session_codes": {
+      "SES-PARKING-TIMEOUT": 6
+    },
+    "L0": {
+      "detected": true,
+      "localised": false,
+      "candidates": [
+        "session-service",
+        "session-db",
+        "parking-service",
+        "parking-db"
+      ]
+    },
+    "L1": {
+      "detected": true,
+      "localised": false,
+      "candidates": [
+        "session-service",
+        "session-db",
+        "parking-service",
+        "parking-db"
+      ]
+    },
+    "L2": {
+      "detected": true,
+      "localised": true,
+      "candidates": [
+        "parking-service"
+      ]
+    }
+  },
+  {
+    "rep": 3,
+    "scenario": "S6",
+    "description": "parking-service intermittent errors (50%)",
+    "truth": "parking-service",
+    "held_out": false,
+    "statuses": [
+      201,
+      502,
+      502,
+      201,
+      200,
+      502,
+      201,
+      502,
+      201,
+      502
+    ],
+    "health": {
+      "parking-service": {
+        "status": "UP",
+        "db": "UP"
+      },
+      "session-service": {
+        "status": "UP",
+        "db": "UP"
+      },
+      "activity-service": {
+        "status": "UP",
+        "db": "UP"
+      }
+    },
+    "session_codes": {
+      "SES-PARKING-HTTP_5XX": 5
+    },
+    "L0": {
+      "detected": true,
+      "localised": false,
+      "candidates": [
+        "session-service",
+        "session-db",
+        "parking-service",
+        "parking-db"
+      ]
+    },
+    "L1": {
+      "detected": true,
+      "localised": false,
+      "candidates": [
+        "session-service",
+        "session-db",
+        "parking-service",
+        "parking-db"
+      ]
+    },
+    "L2": {
+      "detected": true,
+      "localised": true,
+      "candidates": [
+        "parking-service"
+      ]
+    }
+  },
+  {
+    "rep": 3,
+    "scenario": "S7",
+    "description": "activity-service rejects events (silent)",
+    "truth": "activity-service",
+    "held_out": false,
+    "statuses": [
+      201,
+      200,
+      201,
+      200,
+      201,
+      200,
+      201,
+      200,
+      201,
+      200,
+      201,
+      200
+    ],
+    "health": {
+      "parking-service": {
+        "status": "UP",
+        "db": "UP"
+      },
+      "session-service": {
+        "status": "UP",
+        "db": "UP"
+      },
+      "activity-service": {
+        "status": "UP",
+        "db": "UP"
+      }
+    },
+    "session_codes": {
+      "SES-ACTIVITY-HTTP_5XX": 12
+    },
+    "L0": {
+      "detected": false,
+      "localised": false,
+      "candidates": []
+    },
+    "L1": {
+      "detected": false,
+      "localised": false,
+      "candidates": []
+    },
+    "L2": {
+      "detected": true,
+      "localised": true,
+      "candidates": [
+        "activity-service"
+      ]
+    }
+  },
+  {
+    "rep": 3,
+    "scenario": "S8",
+    "description": "session-service misconfigured (wrong parking URL)",
+    "truth": "session-service",
+    "held_out": false,
+    "statuses": [
+      502,
+      502,
+      502,
+      502,
+      502,
+      502
+    ],
+    "health": {
+      "parking-service": {
+        "status": "UP",
+        "db": "UP"
+      },
+      "session-service": {
+        "status": "UP",
+        "db": "UP"
+      },
+      "activity-service": {
+        "status": "UP",
+        "db": "UP"
+      }
+    },
+    "session_codes": {
+      "SES-PARKING-UNREACHABLE": 6
+    },
+    "L0": {
+      "detected": true,
+      "localised": false,
+      "candidates": [
+        "session-service",
+        "session-db",
+        "parking-service",
+        "parking-db"
+      ]
+    },
+    "L1": {
+      "detected": true,
+      "localised": false,
+      "candidates": [
+        "session-service",
+        "session-db",
+        "parking-service",
+        "parking-db"
+      ]
+    },
+    "L2": {
+      "detected": true,
+      "localised": true,
+      "candidates": [
+        "session-service"
+      ]
+    }
+  },
+  {
+    "rep": 3,
+    "scenario": "H1",
+    "description": "activity database down (held out)",
+    "truth": "activity-db",
+    "held_out": true,
+    "statuses": [
+      201,
+      200,
+      201,
+      200,
+      201,
+      200,
+      201,
+      200,
+      201,
+      200,
+      201,
+      200
+    ],
+    "health": {
+      "parking-service": {
+        "status": "UP",
+        "db": "UP"
+      },
+      "session-service": {
+        "status": "UP",
+        "db": "UP"
+      },
+      "activity-service": {
+        "status": "DOWN",
+        "db": "DOWN"
+      }
+    },
+    "session_codes": {
+      "SES-ACTIVITY-HTTP_5XX": 12
+    },
+    "L0": {
+      "detected": false,
+      "localised": false,
+      "candidates": []
+    },
+    "L1": {
+      "detected": true,
+      "localised": true,
+      "candidates": [
+        "activity-db"
+      ]
+    },
+    "L2": {
+      "detected": true,
+      "localised": true,
+      "candidates": [
+        "activity-db"
+      ]
+    }
+  },
+  {
+    "rep": 3,
+    "scenario": "H2",
+    "description": "parking-service slow, below timeout (1.5 s) (held out)",
+    "truth": "parking-service",
+    "held_out": true,
+    "statuses": [
+      201,
+      200,
+      201,
+      200,
+      201,
+      200,
+      201,
+      200,
+      201,
+      200,
+      201,
+      200
+    ],
+    "health": {
+      "parking-service": {
+        "status": "UP",
+        "db": "UP"
+      },
+      "session-service": {
+        "status": "UP",
+        "db": "UP"
+      },
+      "activity-service": {
+        "status": "UP",
+        "db": "UP"
+      }
+    },
+    "session_codes": {},
+    "L0": {
+      "detected": false,
+      "localised": false,
+      "candidates": []
+    },
+    "L1": {
+      "detected": false,
+      "localised": false,
+      "candidates": []
+    },
+    "L2": {
+      "detected": false,
+      "localised": false,
+      "candidates": []
+    }
+  }
+]
