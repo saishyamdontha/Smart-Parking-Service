@@ -1,5 +1,7 @@
 package com.example.parking.web;
 
+import org.springframework.core.Ordered;
+import org.springframework.core.annotation.Order;
 import com.example.parking.exception.ConflictException;
 import com.example.parking.exception.NotFoundException;
 import org.springframework.http.HttpStatus;
@@ -10,6 +12,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import java.util.Map;
 
 @RestControllerAdvice
+@Order(Ordered.HIGHEST_PRECEDENCE)
 public class ApiExceptionHandler {
 
     @ExceptionHandler(NotFoundException.class)
