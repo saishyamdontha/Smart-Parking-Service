@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: parking-frontend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: parking-frontend
+  template:
+    metadata:
+      labels:
+        app: parking-frontend
+    spec:
+      containers:
+        - name: parking-frontend
+          image: saishyamdontha/parking-frontend:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 80

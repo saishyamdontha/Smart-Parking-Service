@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Smart Parking</title>
+<style>
+  body { font-family: system-ui, sans-serif; max-width: 700px; margin: 40px auto; padding: 0 20px; }
+  h1 { font-size: 1.5rem; }
+  table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+  th, td { text-align: left; padding: 8px 10px; border-bottom: 1px solid #ddd; }
+  .available { color: #1a7f37; font-weight: 600; }
+  .occupied { color: #cf222e; font-weight: 600; }
+  button { padding: 4px 12px; border: none; border-radius: 4px; cursor: pointer; font-size: 0.9rem; }
+  .book-btn { background: #1a7f37; color: white; }
+  .release-btn { background: #cf222e; color: white; }
+  button:disabled { background: #ccc; cursor: not-allowed; }
+  #status { margin-top: 16px; padding: 10px; border-radius: 6px; display: none; }
+  #status.error { background: #ffebe9; color: #cf222e; display: block; }
+  #status.success { background: #dafbe1; color: #1a7f37; display: block; }
+</style>
+</head>
+<body>
+
+<h1>🅿️ Smart Parking System</h1>
+<p>Click "Book" to start a session, "Release" to end one.</p>
+
+<div id="status"></div>
+
+<table>
+  <thead>
+    <tr><th>Area</th><th>Space</th><th>Status</th><th>Action</th></tr>
+  </thead>
+  <tbody id="spaces-body"></tbody>
+</table>
+
+<script>
+  // These are set to the Ingress paths — adjust here if your paths differ.
+  const PARKING_API = '/parking/api/spaces';
+  const SESSION_API = '/session/api/sessions';
+
+  // spaceId -> active sessionId, tracked client-side so Release knows which session to end.
+  const activeSessions = {};
+
+  function showStatus(message, isError) {
+    const el = document.getElementById('status');
+    el.textContent = message;
+    el.className = isError ? 'error' : 'success';
+    setTimeout(() => { el.className = ''; }, 4000);
+  }
+
+  async function loadSpaces() {
+    try {
+      const res = await fetch(PARKING_API);
+      const spaces = await res.json();
+      const tbody = document.getElementById('spaces-body');
+      tbody.innerHTML = '';
+      spaces.sort((a, b) => a.id - b.id).forEach(space => {
+        const tr = document.createElement('tr');
+        const isOccupied = space.status === 'OCCUPIED';
+        tr.innerHTML = `
+          <td>${space.area}</td>
+          <td>${space.spaceNumber}</td>
+          <td class="${isOccupied ? 'occupied' : 'available'}">${space.status}</td>
+          <td>
+            ${isOccupied
+              ? `<button class="release-btn" onclick="releaseSpace(${space.id})">Release</button>`
+              : `<button class="book-btn" onclick="bookSpace(${space.id})">Book</button>`}
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
+    } catch (err) {
+      showStatus('Failed to load spaces: ' + err.message, true);
+    }
+  }
+
+  async function bookSpace(spaceId) {
+    try {
+      const res = await fetch(SESSION_API, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ userId: 'frontend-user', spaceId })
+      });
+      if (!res.ok) {
+        const err = await res.json().catch(() => ({}));
+        throw new Error(err.error || `HTTP ${res.status}`);
+      }
+      const session = await res.json();
+      activeSessions[spaceId] = session.id;
+      showStatus(`Booked space ${spaceId} (session ${session.id})`, false);
+      loadSpaces();
+    } catch (err) {
+      showStatus('Booking failed: ' + err.message, true);
+    }
+  }
+
+  async function releaseSpace(spaceId) {
+    const sessionId = activeSessions[spaceId];
+    if (!sessionId) {
+      showStatus('No tracked session for this space (booked before page load?)', true);
+      return;
+    }
+    try {
+      const res = await fetch(`${SESSION_API}/${sessionId}/end`, { method: 'POST' });
+      if (!res.ok) {
+        const err = await res.json().catch(() => ({}));
+        throw new Error(err.error || `HTTP ${res.status}`);
+      }
+      delete activeSessions[spaceId];
+      showStatus(`Released space ${spaceId}`, false);
+      loadSpaces();
+    } catch (err) {
+      showStatus('Release failed: ' + err.message, true);
+    }
+  }
+
+  loadSpaces();
+  setInterval(loadSpaces, 5000); // auto-refresh every 5s so other terminal/curl actions are visible too
+</script>
+
+</body>
+</html>
