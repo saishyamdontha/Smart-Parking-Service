@@ -15,13 +15,25 @@ services:
 
   parking-service:
     build: ./parking-service
-    environment: { DB_HOST: parking-db, DB_PORT: "5432", DB_USER: parking, DB_PASSWORD: parking }
+    environment:
+      DB_HOST: parking-db
+      DB_PORT: "5432"
+      DB_USER: parking
+      DB_PASSWORD: parking
+      MANAGEMENT_ENDPOINT_HEALTH_SHOW_DETAILS: always
+      LOGGING_PATTERN_LEVEL: "%5p [cid=%X{correlationId:-}]"
     ports: ["8081:8081"]
     depends_on: { parking-db: { condition: service_healthy } }
 
   activity-service:
     build: ./activity-service
-    environment: { DB_HOST: activity-db, DB_PORT: "5432", DB_USER: activity, DB_PASSWORD: activity }
+    environment:
+      DB_HOST: activity-db
+      DB_PORT: "5432"
+      DB_USER: activity
+      DB_PASSWORD: activity
+      MANAGEMENT_ENDPOINT_HEALTH_SHOW_DETAILS: always
+      LOGGING_PATTERN_LEVEL: "%5p [cid=%X{correlationId:-}]"
     ports: ["8083:8083"]
     depends_on: { activity-db: { condition: service_healthy } }
 
@@ -34,6 +46,8 @@ services:
       DB_PASSWORD: session
       PARKING_SERVICE_URL: http://parking-service:8081
       ACTIVITY_SERVICE_URL: http://activity-service:8083
+      MANAGEMENT_ENDPOINT_HEALTH_SHOW_DETAILS: always
+      LOGGING_PATTERN_LEVEL: "%5p [cid=%X{correlationId:-}]"
     ports: ["8082:8082"]
     depends_on:
       session-db: { condition: service_healthy }
