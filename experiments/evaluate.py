@@ -130,8 +130,10 @@ def health_view():
         try:
             j = requests.get(u + "/actuator/health", timeout=3).json()
             view[name] = {"status": j.get("status"), "db": j.get("components", {}).get("db", {}).get("status")}
+        except requests.Timeout:
+            view[name] = {"status": "UNRESPONSIVE", "db": None}   # up, but not answering in time
         except (requests.RequestException, ValueError):
-            view[name] = {"status": "UNREACHABLE", "db": None}
+            view[name] = {"status": "UNREACHABLE", "db": None}    # connection refused: process is down
     return view
 
 
@@ -157,11 +159,14 @@ def localise_l0(statuses):
 def localise_l1(statuses, health):
     found = []
     for svc, h in health.items():
+        db = svc.replace("-service", "-db")
         if h["status"] == "UNREACHABLE":
             found.append(svc)
+        elif h["status"] == "UNRESPONSIVE":
+            found += [svc, db]          # stuck: the service or something it waits on
         elif h["db"] == "DOWN":
-            found.append(svc.replace("-service", "-db"))
-    return found or localise_l0(statuses)
+            found.append(db)
+    return list(dict.fromkeys(found)) or localise_l0(statuses)
 
 
 def db_down(diag):
@@ -169,24 +174,23 @@ def db_down(diag):
 
 
 def localise_l2(statuses, health, diag):
-    from_health = [c for c in localise_l1(statuses, health) if c not in CALL_PATH or len(localise_l1(statuses, health)) == 1]
-    if len(from_health) == 1:
-        return from_health
+    """Read the diagnostic error codes and dependency views first; fall back to L1 only if they say nothing."""
     sess = diag.get("session-service") or {}
+    park = diag.get("parking-service")
+    act = diag.get("activity-service")
     codes = set(sess.get("errorCounts", {}))
     found = []
-    if "SES-PARKING-TIMEOUT" in codes:
-        found.append("parking-service")
+    if "SES-PARKING-TIMEOUT" in codes or "SES-PARKING-HTTP_5XX" in codes:
+        found.append("parking-db" if db_down(park) else "parking-service")
     if "SES-PARKING-UNREACHABLE" in codes:
-        # Reachable from outside but not from session-service: the problem is session-service's view of it.
+        # Reachable from outside but not from session-service: session-service's view of it is wrong.
         found.append("session-service" if health["parking-service"]["status"] == "UP" else "parking-service")
-    if "SES-PARKING-HTTP_5XX" in codes:
-        found.append("parking-db" if db_down(diag.get("parking-service")) else "parking-service")
     if any(c.startswith("SES-ACTIVITY-") for c in codes):
-        act = diag.get("activity-service")
         found.append("activity-service" if act is None else ("activity-db" if db_down(act) else "activity-service"))
     if "SES-INTERNAL" in codes:
         found.append("session-db" if db_down(sess) else "session-service")
+    if sess == {} and health["session-service"]["status"] in ("UNREACHABLE", "UNRESPONSIVE"):
+        found += localise_l1(statuses, health)
     found = list(dict.fromkeys(found))
     return found or localise_l1(statuses, health)
 

@@ -22,6 +22,7 @@ services:
       DB_PASSWORD: parking
       MANAGEMENT_ENDPOINT_HEALTH_SHOW_DETAILS: always
       LOGGING_PATTERN_LEVEL: "%5p [cid=%X{correlationId:-}]"
+      SPRING_DATASOURCE_HIKARI_CONNECTION_TIMEOUT: "1000"
     ports: ["8081:8081"]
     depends_on: { parking-db: { condition: service_healthy } }
 
@@ -34,6 +35,7 @@ services:
       DB_PASSWORD: activity
       MANAGEMENT_ENDPOINT_HEALTH_SHOW_DETAILS: always
       LOGGING_PATTERN_LEVEL: "%5p [cid=%X{correlationId:-}]"
+      SPRING_DATASOURCE_HIKARI_CONNECTION_TIMEOUT: "1000"
     ports: ["8083:8083"]
     depends_on: { activity-db: { condition: service_healthy } }
 
@@ -48,6 +50,7 @@ services:
       ACTIVITY_SERVICE_URL: http://activity-service:8083
       MANAGEMENT_ENDPOINT_HEALTH_SHOW_DETAILS: always
       LOGGING_PATTERN_LEVEL: "%5p [cid=%X{correlationId:-}]"
+      SPRING_DATASOURCE_HIKARI_CONNECTION_TIMEOUT: "1000"
     ports: ["8082:8082"]
     depends_on:
       session-db: { condition: service_healthy }
